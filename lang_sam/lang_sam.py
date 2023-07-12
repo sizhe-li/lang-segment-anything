@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from groundingdino.models import build_model
 from groundingdino.util import box_ops
-from groundingdino.util.inference import predict
+from groundingdino.util.inference import predict, load_model
 from groundingdino.util.slconfig import SLConfig
 from groundingdino.util.utils import clean_state_dict
 from huggingface_hub import hf_hub_download
@@ -73,6 +73,12 @@ class LangSAM():
         ckpt_filename = "groundingdino_swinb_cogcoor.pth"
         ckpt_config_filename = "GroundingDINO_SwinB.cfg.py"
         self.groundingdino = load_model_hf(ckpt_repo_id, ckpt_filename, ckpt_config_filename)
+        # ckpt_filename = "/home/scene-rep-robot/scratch/self-model/groundingdino/weights/groundingdino_swinb_cogcoor.pth"
+        # ckpt_config_filename = "/home/scene-rep-robot/scratch/self-model/groundingdino/config/GroundingDINO_SwinB_cfg.py"
+        # assert os.path.exists(ckpt_filename), f"Checkpoint file {ckpt_filename} does not exist"
+        # assert os.path.exists(ckpt_config_filename), f"Config file {ckpt_config_filename} does not exist"
+
+        # self.groundingdino = load_model(ckpt_config_filename, ckpt_filename)
 
     def predict_dino(self, image_pil, text_prompt, box_threshold, text_threshold):
         image_trans = transform_image(image_pil)
